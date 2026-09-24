@@ -2,8 +2,8 @@ const { GClient, Plugins, Command, Component } = require('gcommands');
 const { GatewayIntentBits, Partials } = require('discord.js');
 const { join } = require('path');
 require('dotenv').config();
-import("mongoose");
-const mongoose = require('mongoose');
+// import("mongoose");
+// const mongoose = require('mongoose');
 
 Command.setDefaults({
 	cooldown: '10s',
@@ -44,22 +44,30 @@ const client = new GClient({
 });
 
 //Connects mongoDB
-(async function connect() {
-    mongoose.set('strictQuery', false);
-    try {
-        console.log(`🔄 Connecting database...`);
-
-        await mongoose.connect(process.env.MONGO_TOKEN,);
-    } catch (error) {
-        console.log(`Error ${error}`);
-        console.log("⚠️ Database did not connect!");
-    }
-})();
+// (async function connect() {
+//    mongoose.set('strictQuery', false);
+//    try {
+//        console.log(`🔄 Connecting database...`);
+//
+//        await mongoose.connect(process.env.MONGO_TOKEN,);
+//    } catch (error) {
+//        console.log(`Error ${error}`);
+//        console.log("⚠️ Database did not connect!");
+//    }
+//})();
  
 //Logs mongoDB connect
-mongoose.connection.once("open", () => {
-    console.log("✅ Database connected successfully!");
-});
+//mongoose.connection.once("open", () => {
+//    console.log("✅ Database connected successfully!");
+//});
 
 // Login to the discord API
 client.login(process.env.BOT_TOKEN,).catch(console.error);
+
+client.once('ready', () => {
+    console.log('Connected guilds:');
+
+    client.guilds.cache.forEach(guild => {
+        console.log(`${guild.name}: ${guild.id}`);
+    });
+});

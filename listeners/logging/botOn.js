@@ -1,8 +1,9 @@
 const { Listener } = require('gcommands');
 const { ActivityType, EmbedBuilder } = require('discord.js');
 
-const timerDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-const bumpSchema = require('../../schemas/bumpSchema.js');
+
+
+
 const counting = require('../../schemas/countingSchema.js');
 const roleDuration = 43200000; // 12 hours in milliseconds
 const mostActiveRole = ['1288605699064205424'];
@@ -11,35 +12,6 @@ const crimeLordRole = ['1288600551382319115'];
 const levelSchema = require('../../schemas/level.js');
 const moneySchema = require('../../schemas/money.js');
 const crimeSchema = require('../../schemas/crimeSchema.js');
-
-const setupBumpReminders = async (ctx) => {
-    const bumps = await bumpSchema.find({});
-    
-    bumps.forEach(bump => {
-        const timeSinceLastBump = new Date() - new Date(bump.lastBumpTime);
-        const timeUntilNextBump = timerDuration - timeSinceLastBump;
-
-        if (timeUntilNextBump > 0) {
-            setTimeout(async () => {
-                const channel = await ctx.channels.cache.get(bump.channelId);
-                
-                if (channel) {
-                    const remindEmbed = new EmbedBuilder()
-                        .setColor(0x8269c2)
-                        .setTimestamp()
-                        .setFooter({
-                            text: channel.guild.name,
-                            iconURL: channel.guild.iconURL() // Optional: Server icon URL
-                        })
-                        .setTitle(`<:xtriangle_small:1276263767872770108> 𝙸𝚝'𝚜 𝚝𝚒𝚖𝚎 𝚝𝚘 𝚋𝚞𝚖𝚙!`)
-                        .setDescription(`<:xtriangle_small:1276263767872770108> Do /bump to bump 𝔸𝕕𝕖𝕡𝕥𝕦𝕤 𝔸𝕣𝕚𝕒⁺₊✧!`);
-
-                    await channel.send({ content: '<:xannounce:1276188470250832014> <@&1279272272087220276> <:xannounce:1276188470250832014>', embeds: [remindEmbed] });
-                }
-            }, timeUntilNextBump);
-        }
-    });
-}
 
 const setupRoleAssignments = async (ctx) => {
     const allData = await counting.find();
@@ -186,11 +158,11 @@ new Listener({
 
   run: async (ctx) => {
     console.log(`✅ ${ctx.user.tag} is online!`);
-    ctx.user.setActivity("𝔸𝕕𝕖𝕡𝕥𝕦𝕤 𝔸𝕣𝕚𝕒⁺₊✧", {
+    ctx.user.setActivity("Melody of the Rain || 🧪☀", {
         type: ActivityType.Watching,
         url: "https://discord.gg/MW3r57vamW"
     });
-    const modChannelId = '1278877530635374675';
+    const modChannelId = '1273736883096256666';
     const modChannel = ctx.channels.cache.get(modChannelId);
     if (modChannel) {
         await modChannel.send({ content: `${ctx.user.tag} is now online!` });
@@ -205,9 +177,6 @@ new Listener({
     setInterval( async () => {
         await rankingRoles(ctx);
     }, 600000);
-
-    // Fetch bumps and set reminders
-    await setupBumpReminders(ctx);
 
 },
 })
