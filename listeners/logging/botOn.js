@@ -1,9 +1,6 @@
 const { Listener } = require('gcommands');
 const { ActivityType, EmbedBuilder } = require('discord.js');
 
-
-
-
 const counting = require('../../schemas/countingSchema.js');
 const roleDuration = 43200000; // 12 hours in milliseconds
 const mostActiveRole = ['1288605699064205424'];
@@ -154,10 +151,14 @@ const rankingRoles = async (ctx) => {
 
 new Listener({
   name: 'Bot Start',
-  event: 'ready',
+  event: 'clientReady',
 
   run: async (ctx) => {
     console.log(`✅ ${ctx.user.tag} is online!`);
+    console.log('🔗 Connected guilds:');
+    ctx.guilds.cache.forEach(guild => {
+        console.log(`"${guild.name}" | ID:${guild.id}`)
+    });
     ctx.user.setActivity("Melody of the Rain || 🧪☀", {
         type: ActivityType.Watching,
         url: "https://discord.gg/MW3r57vamW"

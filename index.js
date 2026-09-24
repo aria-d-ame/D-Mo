@@ -63,11 +63,3 @@ const client = new GClient({
 
 // Login to the discord API
 client.login(process.env.BOT_TOKEN,).catch(console.error);
-
-client.once('ready', () => {
-    console.log('Connected guilds:');
-
-    client.guilds.cache.forEach(guild => {
-        console.log(`${guild.name}: ${guild.id}`);
-    });
-});
