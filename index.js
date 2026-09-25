@@ -58,4 +58,4 @@ const client = new GClient({
 })();
 
 // Login to the discord API
-client.login(process.env.botToken,).catch(console.error);
+client.login(process.env.botToken).catch(console.error);
