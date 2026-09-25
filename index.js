@@ -48,7 +48,7 @@ const client = new GClient({
     try {
         console.log(`🔄 Connecting to MongoDB...`);
 
-        await mongoose.connect(process.env.mongoToken,);
+        await mongoose.connect(process.env.MONGO_TOKEN,);
 
         console.log(`✅ MongoDB connected successfully!`);
     } catch (error) {
@@ -58,4 +58,4 @@ const client = new GClient({
 })();
 
 // Login to the discord API
-client.login(process.env.botToken).catch(console.error);
+client.login(process.env.BOT_TOKEN).catch(console.error);
