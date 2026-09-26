@@ -1,5 +1,5 @@
 const { Listener } = require('gcommands');
-const { ActivityType, EmbedBuilder } = require('discord.js');
+const { ActivityType } = require('discord.js');
 
 const counting = require('../../schemas/countingSchema.js');
 const roleDuration = 43200000; // 12 hours in milliseconds
@@ -159,16 +159,16 @@ new Listener({
     ctx.guilds.cache.forEach(guild => {
         console.log(`"${guild.name}" | ID:${guild.id}`)
     });
-    ctx.user.setActivity("Melody of the Rain || 🧪☀", {
-        type: ActivityType.Watching,
-        url: "https://discord.gg/MW3r57vamW"
+    ctx.user.setActivity("🧪☀", {
+        type: ActivityType.Watching
     });
-    const modChannelId = '1273736883096256666';
+
+    const modChannelId = process.env.LOG_CHANNEL_ID || '1355556179006328944';
     const modChannel = ctx.channels.cache.get(modChannelId);
     if (modChannel) {
-        await modChannel.send({ content: `${ctx.user.tag} is now online!` });
+        await modChannel.send({ content: `✅ D'Mo is now online!` });
     } else {
-        console.log('Mod channel not found.');
+        console.log('❌ Mod channel not found.');
     };
 
     setInterval( async () => {

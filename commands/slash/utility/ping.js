@@ -2,7 +2,7 @@ const { Command, CommandType } = require('gcommands');
 
 new Command({
   name: 'ping',
-  description: 'Check Cornelius\' ping!',
+  description: `Check D'mo's ping!`,
   type: [CommandType.SLASH],
   run: async (ctx) => {
     try {
