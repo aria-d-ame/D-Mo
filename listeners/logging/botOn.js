@@ -3,9 +3,9 @@ const { ActivityType } = require('discord.js');
 
 const counting = require('../../schemas/countingSchema.js');
 const roleDuration = 43200000; // 12 hours in milliseconds
-const mostActiveRole = ['1288605699064205424'];
-const richestRole = ['1288865814874689567'];
-const crimeLordRole = ['1288600551382319115'];
+const mostActiveRole = process.env.ACTIVE_ROLE;
+const richestRole = process.env.RICH_ROLE;
+const crimeLordRole = process.env.CRIME_ROLE;
 const levelSchema = require('../../schemas/level.js');
 const moneySchema = require('../../schemas/money.js');
 const crimeSchema = require('../../schemas/crimeSchema.js');
@@ -18,7 +18,7 @@ const setupRoleAssignments = async (ctx) => {
             const timeElapsed = Date.now() - assignedAt;
             if (timeElapsed > roleDuration) {
                 const Guild = await ctx.guilds.fetch(data.Guild);
-                const roleId = '1279589654055620719';
+                const roleId = process.env.COUNT_ROLE;
                 
                 try {
                     const member = await Guild.members.fetch(userId);
@@ -163,7 +163,7 @@ new Listener({
         type: ActivityType.Watching
     });
 
-    const modChannelId = process.env.LOG_CHANNEL_ID || '1355556179006328944';
+    const modChannelId = process.env.MOD_CHANNEL_ID;
     const modChannel = ctx.channels.cache.get(modChannelId);
     if (modChannel) {
         await modChannel.send({ content: `✅ D'Mo is now online!` });

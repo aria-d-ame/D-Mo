@@ -78,7 +78,7 @@ new Listener({
           { name: `❓ | Reason:`, value: `${warnReason}`, inline: false }
         );
 
-      const modChannel = await ctx.guild.channels.fetch('1278877530635374675');
+      const modChannel = process.env.MOD_CHANNEL_ID;
       modChannel.send({ embeds: [warningEmbed] });
 
       // Notify the user that they've been warned
