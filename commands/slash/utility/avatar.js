@@ -5,7 +5,7 @@ new Command({
   name: 'avatar',
   description: 'Get a user\'s avatar',
   type: [CommandType.SLASH],
-
+  
   run: async (ctx) => {
     try{
       const user = ctx.options.getUser(`user`) || ctx.user;

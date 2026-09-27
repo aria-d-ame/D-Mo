@@ -1,5 +1,5 @@
-const { Command, CommandType, Argument, ArgumentType } = require('gcommands');
-const { EmbedBuilder } = require('discord.js');
+const { Command, CommandType } = require('gcommands');
+const { ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 
 new Command({
   name: 'User Avatar',
@@ -8,27 +8,41 @@ new Command({
 
   run: async (ctx) => {
     try{
-      const user = ctx.options.getUser(`user`) || ctx.user;
-      const member = await ctx.guild.members.fetch(user.id);
-
-      const icon = user.displayAvatarURL({ dynamic: true, size: 2048 });
+      const targetUser = await ctx.client.users.fetch(ctx.interaction.targetId);
+      const displayName = targetUser.displayName;
+      const username = targetUser.username;
+      const icon = targetUser.displayAvatarURL({ 
+        extension: 'png',
+        dynamic: true, 
+        size: 2048 
+      });
+      const urlButton = new ButtonBuilder()
+        .setLabel('🔗 Avatar Link')
+        .setStyle(ButtonStyle.Link)
+        .setURL(icon);
+      const row = new ActionRowBuilder()
+        .addComponents(urlButton);
 
       const avatarembed = new EmbedBuilder()
-      .setColor(0x8269c2)
-      .setTitle(`<:xannounce:1276188470250832014> 𝚄𝚂𝙴𝚁 𝙰𝚅𝙰𝚃𝙰𝚁 <:xannounce:1276188470250832014>`)
-      .setAuthor({ name: user.displayName })
-      .setDescription('**«═══✧ ✦ ✧ ✦ ✧═══»**')
+      .setColor(0xf69f96)
+      .setTitle(`✦ 𝚄𝚂𝙴𝚁_𝙰𝚅𝙰𝚃𝙰𝚁 ✦`)
+      .setDescription(`**✦ ── ✦ ${displayName} (@${username})✦ ── ✦**`)
       .setImage(icon)
       .setFooter({
-        text: `${ctx.guild.name} • Members: ${ctx.guild.memberCount}`, // Footer text
-        iconURL: ctx.guild.iconURL() // Optional: Server icon URL
+        text: `${ctx.guild.name} ✦ Members: ${ctx.guild.memberCount}`, // Footer text
+        iconURL: ctx.guild.iconURL() ?? undefined,
       })
 
-      await ctx.reply({ embeds: [avatarembed] });
+      await ctx.reply({ 
+        embeds: [avatarembed], 
+        components: [row]
+      });
     } catch (error) {
-      // Handle any errors that occur
-      console.error('⚠️ Error handling document:', error);
-      await ctx.reply('⚠️ Error occurred while fetching user information.');
+      console.error('⚠️ Error handling app command "User Avatar":', error);
+      await ctx.reply({
+        content: '⚠️ Error occurred while fetching user information.',
+        flags: 64
+      });
     }
   }
 })
