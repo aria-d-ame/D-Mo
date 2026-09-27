@@ -22,11 +22,14 @@ new Command({
 
       // If the interaction has already been responded to or deferred, use editReply
       if (ctx.interaction.deferred || ctx.interaction.replied) {
-        await ctx.interaction.editReply('⚠️ Error occurred while processing the command.');
+        await ctx.interaction.editReply('⚠️ Error occurred while processing.');
       } else {
         // Otherwise, reply to the interaction
-        await ctx.interaction.reply('⚠️ Error occurred while processing the command.');
-      }
+          await ctx.interaction.reply({
+            content: '⚠️ Error occurred while processing.',
+            flags: 64
+          });
     }
+  }
   }
 })
