@@ -8,9 +8,9 @@ new Listener({
   event: 'messageCreate',
 
   run: async (ctx) => {
-    const excludedRoles = ['1279589654055620719'];
-    const extraXPRoleId = ['1289736392930361404'];
-    const boosterRole = ['1275906991511834688'];
+    const excludedRoles = process.env.COUNT_ROLE
+    // const extraXPRoleId = ['1289736392930361404'];
+    const boosterRole = process.env.BOOST_ROLE;
     const cooldownTime = 10 * 1000; // 10 seconds
 
     function getRandomInt(min, max) {
@@ -33,24 +33,24 @@ new Listener({
             }
 
             const hasExcludedRole = member.roles.cache.some(role => excludedRoles.includes(role.id));
-            const hasExtraXPRole = member.roles.cache.some(role => extraXPRoleId.includes(role.id));
+            // const hasExtraXPRole = member.roles.cache.some(role => extraXPRoleId.includes(role.id));
             const hasBoosterRole = member.roles.cache.some(role => boosterRole.includes(role.id));
             const levelRoles = [
-                { level: 0, roleId: '1269693621536423949', moneyReward: 0 },
-                { level: 5, roleId: '1274157164054839346', moneyReward: 100 },
-                { level: 10, roleId: '1274157637457412168', moneyReward: 300 },
-                { level: 20, roleId: '1274158590122262650', moneyReward: 1000 },
-                { level: 30, roleId: '1274159198971891865', moneyReward: 2000 },
-                { level: 40, roleId: '1286878355530186812', moneyReward: 5000 },
-                { level: 50, roleId: '1274160177020665856', moneyReward: 10000 },
-                { level: 60, roleId: '1286878507875700788', moneyReward: 20000 },
-                { level: 70, roleId: '1286878584031547494', moneyReward: 40000 },
-                { level: 80, roleId: '1286878638075281460', moneyReward: 60000 },
-                { level: 90, roleId: '1286878724154724404', moneyReward: 100000 },
-                { level: 100, roleId: '1274160360701694044', moneyReward: 150000 }
+                { level: 0, roleId: '1555600028821880913', moneyReward: 0 },
+                { level: 5, roleId: '1555600177740648578', moneyReward: 100 },
+                { level: 10, roleId: '1555600249236758638', moneyReward: 300 },
+                { level: 20, roleId: '1555600302827380857', moneyReward: 1000 },
+                { level: 30, roleId: '1555600356069740616', moneyReward: 2000 },
+                { level: 40, roleId: '1555600532234702992', moneyReward: 5000 },
+                { level: 50, roleId: '1555600605383233737', moneyReward: 10000 },
+                { level: 60, roleId: '1555600642498895964', moneyReward: 20000 },
+                { level: 70, roleId: '1555600683577774130', moneyReward: 40000 },
+                { level: 80, roleId: '1555600708605186200', moneyReward: 60000 },
+                { level: 90, roleId: '1555600741853560953', moneyReward: 100000 },
+                { level: 100, roleId: '1555600767019393084', moneyReward: 150000 }
             ];
 
-            const levelUpChannelId = '1274481457053827092';
+            const levelUpChannelId = process.env.LEVEL_CHANNEL_ID;
             const levelUpChannel = await guild.channels.fetch(levelUpChannelId);
 
             if (hasExcludedRole) {
@@ -120,27 +120,27 @@ new Listener({
 
                     // Send level up message with milestone notification
                     const embedrole = new EmbedBuilder()
-                        .setColor(0x8269c2)
-                        .setTitle(`<:xannounce:1276188470250832014> <@&${roleId}>! <:xannounce:1276188470250832014>`)
-                        .setDescription(`<:xtriangle_small:1276263767872770108> ${author} has hit a level milestone! Here's ${moneyReward}<:xPix_Stars:1275118528844009563>!`);
+                        .setColor(0xf69f96)
+                        .setTitle(`✦ <@&${roleId}>! ✦`)
+                        .setDescription(`✦ ${author} has hit a level milestone! Here's  [💧] ${moneyReward} Raindrops!`);
 
                     await levelUpChannel.send({ embeds: [embedrole] });
                 }
 
                 // Send level up message without milestone notification
                 const embed = new EmbedBuilder()
-                    .setColor(0x8269c2)
-                    .setTitle('<:xannounce:1276188470250832014> 𝙻𝙴𝚅𝙴𝙻 𝚄𝙿! <:xannounce:1276188470250832014>')
-                    .setDescription(`<:xtriangle_small:1276263767872770108> ${author} has reached level ${data.Level}!`);
+                    .setColor(0xf69f96)
+                    .setTitle('✦  𝙻𝙴𝚅𝙴𝙻 𝚄𝙿! ✦')
+                    .setDescription(`✦ ${author} has reached level [✨] ${data.Level}!`);
 
                 await levelUpChannel.send({ embeds: [embed] });
             } else {
                 const extraXP = 10;
                 data.XP += give;
                 data.LastXPTime = Date.now();
-                if (hasExtraXPRole) { // Define how much extra XP to give
-                    data.XP += extraXP; // Add extra XP to the total
-                }
+                // if (hasExtraXPRole) { // Define how much extra XP to give
+                //    data.XP += extraXP; // Add extra XP to the total
+                //}
                 if (hasBoosterRole) { // Define how much extra XP to give
                     data.XP += extraXP; // Add extra XP to the total
                 }
