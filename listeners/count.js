@@ -31,7 +31,7 @@ new Listener({
             data.Number = 1; // Reset to initial value
             data.LastUser = null; // Reset the last user
             await data.save();
-            await ctx.react('xdenied:1276188176238645300');
+            await ctx.react('❌');
             const embed = new EmbedBuilder()
                 .setColor(0x8269c2)
                 .setDescription(`<:xtriangle_small:1276263767872770108> You ruined everything. Now we have to start from 1. Thanks.`)
@@ -61,7 +61,7 @@ new Listener({
             data.Number = 1; // Reset to initial value
             data.LastUser = null; // Reset the last user
             await data.save();
-            await ctx.react('xdenied:1276188176238645300');
+            await ctx.react('❌');
             const embed = new EmbedBuilder()
                 .setColor(0x8269c2)
                 .setDescription(`<:xtriangle_small:1276263767872770108> You can't count twice in a row silly! Start from 1!`)
@@ -96,7 +96,7 @@ new Listener({
                 console.error('Error assigning role:', err);
             }
         } else {
-            await ctx.react('xapproved:1276185812257738823');
+            await ctx.react('✅');
             data.LastUser = ctx.author.id;
             data.Number++;
             await data.save();

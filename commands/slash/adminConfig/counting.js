@@ -1,5 +1,7 @@
 const { Command, CommandType, Argument, ArgumentType } = require('gcommands');
-const { PermissionsBitField } = require('discord.js');
+const countingSchema = require('../../../schemas/countingSchema.js');
+const { PermissionsBitField, EmbedBuilder } = require('discord.js');
+
 
 new Command({
   name: 'counting',
@@ -27,18 +29,18 @@ new Command({
   run: async (ctx) => {
     const { options } = ctx;
     const sub = ctx.arguments.getString('type');
-    const data = await counting.findOne({ Guild: ctx.guild.id});
+    const data = await countingSchema.findOne({ Guild: ctx.guild.id});
 
-    if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) return await interaction.reply({ content: `You don't have permissions to manage counting!`, ephermal: true })
+    if (!ctx.member.permissions.has(PermissionsBitField.Flags.Administrator)) return await interaction.reply({ content: `You don't have permissions to manage counting!`, flags: 64 })
 
     switch (sub) {
       case 'setup':
 
       if (data) {
-        return await ctx.reply({ content: 'Counting has already been set up!', emphermal: true})
+        return await ctx.reply({ content: 'Counting has already been set up!', flags: 64})
       } else {
         const channel = ctx.arguments.getChannel('channel');
-        await counting.create({
+        await countingSchema.create({
           Guild: ctx.guild.id,
           Channel: channel.id,
           Number: 1
@@ -56,7 +58,7 @@ new Command({
       if (!data) {
         return await ctx.reply({ content: `You don't have counting set up!` })
       } else {
-        await counting.deleteOne({
+        await countingSchema.deleteOne({
           Guild: ctx.guild.id,
         });
 
