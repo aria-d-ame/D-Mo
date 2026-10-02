@@ -41,6 +41,6 @@ new Command({
   const escapedUsername = tag.replace(/_/g, '\\_');
 
   // Confirm the XP has been set
-  await ctx.interaction.reply({ content: `<:xtriangle_small:1276263767872770108> Set ${xp} XP for ${escapedUsername}.`});
+  await ctx.interaction.reply({ content: `✦ Set ${xp} [✨] XP for ${escapedUsername}.`});
   }
 })

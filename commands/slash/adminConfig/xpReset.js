@@ -19,7 +19,7 @@ new Command({
       await levelSchema.deleteMany({ Guild: guild.id });
 
       // Send a success message
-      await ctx.reply({ content: `XP for guild has been reset.` });
+      await ctx.reply({ content: `✦ [✨] XP for guild has been reset.` });
   } catch (err) {
       console.error('Error resetting XP:', err);
       await ctx.reply({ content: `There was an error resetting XP. Please try again later.`, ephemeral: true });
